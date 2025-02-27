@@ -1,0 +1,25 @@
+Banana,001,1,7.0
+Apple,002,15,9.9
+Orange,003,18,5.9
+Grapes,004,40,39.8
+Mango,005,25,18.0
+Pineapple,006,12,15.5
+Watermelon,007,10,8.5
+Papaya,008,30,12.0
+Pear,009,22,10.5
+Strawberry,010,50,25.0
+Blueberry,011,45,50.0
+Kiwi,012,35,30.0
+Avocado,013,40,22.0
+Carrot,014,55,6.0
+Potato,015,100,3.5
+Lettuce,016,60,2.8
+Tomato,017,75,8.0
+Broccoli,018,30,11.0
+Cucumber,019,50,4.5
+Onion,020,80,3.0
+Bell Pepper,021,40,12.5
+Zucchini,022,25,9.0
+Eggplant,023,20,14.0
+Spinach,024,45,7.2
+Cauliflower,025,28,10.8

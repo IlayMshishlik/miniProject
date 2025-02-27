@@ -1,0 +1,99 @@
+import os
+
+stock_pile = "products.txt"
+def load_products():
+    products = {}
+    if os.path.exists(stock_pile):
+        with open(stock_pile, "r") as file:
+            for line in file:
+                name, IDnum, quantity, price = line.strip().split(',')
+                products[IDnum] = {"product": name, "quantity": int(quantity), "price": float(price)}
+    return products
+
+def add(name, IDnum, quantity, price, products):
+    if name.upper() in [product["product"].upper() for product in products.values()]:
+        print("This product already exists.")
+        return products
+    products[IDnum] = {"product": name, "quantity": quantity, "price": price}
+    with open(stock_pile, 'a') as file:
+        file.write(f"{name},{IDnum},{quantity},{price}\n")
+    print("Product added successfully.")
+    return products
+
+def delete(IDnum, products):
+    if IDnum not in products:
+        print("Product not found.")
+        return products
+    del products[IDnum]
+    with open(stock_pile, 'w') as file:
+        for product_id, product in products.items():
+            file.write(f"{product['product']},{product_id},{product['quantity']},{product['price']}\n")
+    print("Product deleted successfully.")
+    return products
+
+def update_stock(IDnum, new_quantity, products):
+    if IDnum not in products:
+        print("Product not found.")
+        return products
+    products[IDnum]["quantity"] = new_quantity
+    with open(stock_pile, 'w') as file:
+        for product_id, product in products.items():
+            file.write(f"{product['product']},{product_id},{product['quantity']},{product['price']}\n")
+    print("Product stock updated successfully.")
+    return products
+
+
+from prettytable import PrettyTable
+
+
+def show_products(products):
+    if not products:
+        print("No products available.")
+        return
+    table = PrettyTable()
+    table.field_names = ["Name", "SKU", "Quantity", "Price"]
+    for IDnum, product in products.items():
+        table.add_row([product['product'], IDnum, product['quantity'], product['price']])
+    print(table)
+
+
+def market():
+    products = load_products()
+
+    while True:
+        print("\nHello and welcome to Veggie Grove")
+        print("Choose an action:")
+        print("1) Add a new product")
+        print("2) Delete a product")
+        print("3) Update the stock")
+        print("4) Show all items")
+        print("5) Save & exit")
+        choice = int(input("Choose an action: "))
+
+        if choice == 1:
+            print("You chose to add a new item.")
+            name = input("Enter product name: ")
+            IDnum = input("Enter the SKU: ")
+            quantity = int(input("Enter the quantity of the product: "))
+            price = float(input("Enter the price in KG: "))
+            products = add(name, IDnum, quantity, price, products)
+        elif choice == 2:
+            print("You chose to delete an existing item.")
+            IDnum = input("Enter the SKU of the product to delete: ")
+            products = delete(IDnum, products)
+        elif choice == 3:
+            print("You chose to update the stock.")
+            IDnum = input("Enter the SKU of the product to update: ")
+            new_quantity = int(input("Enter the new quantity: "))
+            products = update_stock(IDnum, new_quantity, products)
+        elif choice == 4:
+            print("The items are:")
+            show_products(products)
+
+        elif choice == 5:
+            print("The list has been updated. Exiting.")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+market()
